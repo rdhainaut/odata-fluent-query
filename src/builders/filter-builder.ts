@@ -118,11 +118,25 @@ export class FilterBuilder {
     else return mk_exp(`${this.prefix} gt ${d.getPropName()}`)
   }
 
+  isAfterOrEqual = (d: string | Date | FilterBuilder) => {
+    if (typeof d === 'string') return mk_exp(`${this.prefix} ge ${d}`)
+    else if (d instanceof Date)
+      return mk_exp(`${this.prefix} ge ${d.toISOString()}`)
+    else return mk_exp(`${this.prefix} ge ${d.getPropName()}`)
+  }
+
   isBefore = (d: string | Date | FilterBuilder) => {
     if (typeof d === 'string') return mk_exp(`${this.prefix} lt ${d}`)
     else if (d instanceof Date)
       return mk_exp(`${this.prefix} lt ${d.toISOString()}`)
     else return mk_exp(`${this.prefix} gt ${d.getPropName()}`)
+  }
+
+  isBeforeOrEqual = (d: string | Date | FilterBuilder) => {
+    if (typeof d === 'string') return mk_exp(`${this.prefix} le ${d}`)
+    else if (d instanceof Date)
+      return mk_exp(`${this.prefix} le ${d.toISOString()}`)
+    else return mk_exp(`${this.prefix} le ${d.getPropName()}`)
   }
 
   protected dateToObject = (d: Date) => {
@@ -250,8 +264,14 @@ export class FilterBuilder {
   biggerThan = (n: number | FilterBuilder) =>
     mk_exp(`${this.prefix} gt ${typeof n == 'number' ? n : n.getPropName()}`)
 
+  biggerOrEqualThan = (n: number | FilterBuilder) =>
+    mk_exp(`${this.prefix} ge ${typeof n == 'number' ? n : n.getPropName()}`)
+
   lessThan = (n: number | FilterBuilder) =>
     mk_exp(`${this.prefix} lt ${typeof n == 'number' ? n : n.getPropName()}`)
+
+  lessOrEqualThan = (n: number | FilterBuilder) =>
+    mk_exp(`${this.prefix} le ${typeof n == 'number' ? n : n.getPropName()}`)
 
   ////////////////////////////////
   // FilterBuilder Generic Methods
