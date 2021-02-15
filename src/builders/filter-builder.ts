@@ -122,7 +122,7 @@ export class FilterBuilder {
     if (typeof d === 'string') return mk_exp(`${this.prefix} lt ${d}`)
     else if (d instanceof Date)
       return mk_exp(`${this.prefix} lt ${d.toISOString()}`)
-    else return mk_exp(`${this.prefix} gt ${d.getPropName()}`)
+    else return mk_exp(`${this.prefix} lt ${d.getPropName()}`)
   }
 
   protected dateToObject = (d: Date) => {
